@@ -2,7 +2,7 @@ module.exports = (grunt) ->
 
   banner = """
     /*
-     * Taken from https://github.com/pozadi/grunt-reusable-parts
+     * Taken from https://github.com/pozadi/bacon-reusable-parts
      * License: MIT
      * Built at: <%= grunt.template.today("yyyy-mm-dd HH:MM:ss o") %>
      */
