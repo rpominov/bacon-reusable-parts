@@ -1,0 +1,58 @@
+<html>
+<head>
+  <title></title>
+
+  <style type="text/css">
+    .wrap, .slide {
+      width: 500px;
+      height: 300px;
+    }
+    .wrap {
+      position: relative;
+      overflow: hidden;
+    }
+      .slides {
+        width: 1500px;
+        height: 300px;
+        position: absolute;
+      }
+        .slide {
+          float: left;
+          text-align: center;
+          line-height: 300px;
+          font-size: 90px;
+          color: white;
+        }
+        .slide:nth-child(odd) {
+          background: #444;
+        }
+        .slide:nth-child(even) {
+          background: #666;
+        }
+  </style>
+</head>
+<body>
+
+  <div class="wrap">
+    <div class="slides">
+      <div class="slide">slide #1</div>
+      <div class="slide">slide #2</div>
+      <div class="slide">slide #3</div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="../bower_components/jquery/jquery.js"></script>
+  <script type="text/javascript" src="../bower_components/bacon/dist/Bacon.js"></script>
+  <script type="text/javascript" src="../dist/bacon-drags.js"></script>
+  <script type="text/javascript">
+    baconUtils.drags.swipesAndDrags('.wrap', 'both')
+      .flatMap(function(x){return x})
+      .map('.dX')
+      .scan(0, function(current, delta) {
+        return Math.max(-1000, Math.min(0, current + delta));
+      })
+      .assign($('.slides'), 'css', 'margin-left');
+  </script>
+
+</body>
+</html>
