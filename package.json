@@ -8,7 +8,8 @@
     "grunt": "~0.4.2",
     "grunt-contrib-coffee": "~0.8.0",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-contrib-concat": "~0.3.0"
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-newer": "~0.6.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

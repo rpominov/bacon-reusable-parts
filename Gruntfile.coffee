@@ -10,6 +10,9 @@ module.exports = (grunt) ->
 
   """
 
+  hasNoBanner = (src) ->
+    not /^\/\*/.test(grunt.file.read(src))
+
   grunt.initConfig
     pkg: grunt.file.readJSON('package.json')
     coffee:
@@ -35,6 +38,7 @@ module.exports = (grunt) ->
         cwd: 'dist'
         src: '*.js'
         dest: 'dist'
+        filter: hasNoBanner
 
 
 
@@ -42,5 +46,6 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-contrib-concat'
+  grunt.loadNpmTasks 'grunt-newer'
 
-  grunt.registerTask 'default', ['coffee', 'concat:banner']
+  grunt.registerTask 'default', ['newer:coffee', 'concat:banner']
