@@ -1,11 +1,11 @@
 /*
  * Taken from https://github.com/pozadi/bacon-reusable-parts
  * License: MIT
- * Built at: 2013-12-25 22:57:24 +0400
+ * Built at: 2013-12-26 13:47:50 +0400
  */
 
 (function(exports) {
-  var abstractMoves, deltas, getPos, id, preventBoth, preventHorisontal, preventVertical;
+  var abstractMoves, deltas, documentMouseMoves, documentMouseUps, documentTouchEnds, documentTouchMoves, getPos, id, preventBoth, preventHorisontal, preventVertical;
   id = function(x) {
     return x;
   };
@@ -66,11 +66,15 @@
   exports.isVertical = function(move) {
     return Math.abs(move.dY / move.dX) > 1.2;
   };
+  documentMouseMoves = $(document).asEventStream('mousemove');
+  documentMouseUps = $(document).asEventStream('mouseup');
   exports.mouseDrags = function(el, preventDefault) {
-    return abstractMoves($(el).asEventStream('mousedown'), $('body').asEventStream('mousemove'), $('body').asEventStream('mouseup'), preventDefault);
+    return abstractMoves($(el).asEventStream('mousedown'), documentMouseMoves, documentMouseUps, preventDefault);
   };
+  documentTouchMoves = $(document).asEventStream('touchmove');
+  documentTouchEnds = $(document).asEventStream('touchend');
   exports.swipes = function(el, preventDefault) {
-    return abstractMoves($(el).asEventStream('touchstart'), $('body').asEventStream('touchmove'), $('body').asEventStream('touchend'), preventDefault);
+    return abstractMoves($(el).asEventStream('touchstart'), documentTouchMoves, documentTouchEnds, preventDefault);
   };
   return exports.swipesAndDrags = function(el, preventDefault) {
     return Bacon.mergeAll(exports.mouseDrags(el, preventDefault), exports.swipes(el, preventDefault));

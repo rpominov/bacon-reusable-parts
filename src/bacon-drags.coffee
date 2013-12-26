@@ -48,19 +48,25 @@ do (exports = (window.baconUtils or= {}).drags = {}) ->
   exports.isVertical = (move) ->
     Math.abs(move.dY / move.dX) > 1.2
 
+  documentMouseMoves = $(document).asEventStream('mousemove')
+  documentMouseUps = $(document).asEventStream('mouseup')
+
   exports.mouseDrags = (el, preventDefault) ->
     abstractMoves(
       $(el).asEventStream('mousedown'),
-      $('body').asEventStream('mousemove'),
-      $('body').asEventStream('mouseup'),
+      documentMouseMoves,
+      documentMouseUps,
       preventDefault
     )
+
+  documentTouchMoves = $(document).asEventStream('touchmove')
+  documentTouchEnds = $(document).asEventStream('touchend')
 
   exports.swipes = (el, preventDefault) ->
     abstractMoves(
       $(el).asEventStream('touchstart'),
-      $('body').asEventStream('touchmove'),
-      $('body').asEventStream('touchend'),
+      documentTouchMoves,
+      documentTouchEnds,
       preventDefault
     )
 
