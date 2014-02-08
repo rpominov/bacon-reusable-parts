@@ -16,3 +16,11 @@ do (exports = (window.baconUtils or= {})) ->
     request handler
     ->
       subscribed = false
+
+
+  # stream:           --a-----------b-c---------e----
+  # animationFrames:  f-----f-----f-----f-----f-----f
+  # result:           ------a-----------c-----------e
+  exports.sampledByAnimationsFrames = (stream) ->
+    awaiting = stream.awaiting exports.animationFrames
+    stream.sampledBy awaiting.changes().filter (x) -> !x
