@@ -1,3 +1,6 @@
+# Taken from https://github.com/pozadi/bacon-reusable-parts
+# License: MIT
+
 do (exports = (window.baconUtils or= {})) ->
 
   if typeof document.hidden isnt "undefined"
