@@ -1,24 +1,39 @@
 /*
  * Taken from https://github.com/pozadi/bacon-reusable-parts
  * License: MIT
- * Built at: 2013-12-26 14:10:33 +0400
+ * Built at: 2014-03-11 23:01:13 +0400
  */
 
 (function(exports) {
-  var $document, $window, resizes, size;
+  var $document, $window, prop, size;
   $window = $(window);
   $document = $(document);
-  size = function(o) {
+  exports.windowResizes = $window.asEventStream('resize').throttle(250);
+  prop = function(getValue) {
+    return exports.windowResizes.map(getValue).toProperty(getValue());
+  };
+  size = function($el) {
     return {
-      width: o.width(),
-      height: o.height()
+      width: $el.width(),
+      height: $el.height()
     };
   };
-  resizes = exports.windowResizes = $window.asEventStream('resize').throttle(500);
-  exports.windowSize = resizes.map(function() {
+  exports.windowSize = prop(function() {
     return size($window);
-  }).toProperty(size($window));
-  return exports.documentSize = resizes.map(function() {
+  });
+  exports.documentSize = prop(function() {
     return size($document);
-  }).toProperty(size($document));
+  });
+  exports.windowWidth = prop(function() {
+    return $window.width();
+  });
+  exports.windowHeight = prop(function() {
+    return $window.height();
+  });
+  exports.documentWidth = prop(function() {
+    return $document.width();
+  });
+  return exports.documentHeight = prop(function() {
+    return $document.height();
+  });
 })((window.baconUtils || (window.baconUtils = {})));

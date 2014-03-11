@@ -3,10 +3,18 @@ do (exports = (window.baconUtils or= {})) ->
   $window = $(window)
   $document = $(document)
 
-  size = (o) ->
-    width: o.width()
-    height: o.height()
+  exports.windowResizes = $window.asEventStream('resize').throttle(250)
 
-  resizes = exports.windowResizes = $window.asEventStream('resize').throttle(500)
-  exports.windowSize = resizes.map(-> size $window).toProperty size($window)
-  exports.documentSize = resizes.map(-> size $document).toProperty size($document)
+  prop = (getValue) ->
+    exports.windowResizes.map(getValue).toProperty getValue()
+
+  size = ($el) ->
+    width: $el.width()
+    height: $el.height()
+
+  exports.windowSize = prop -> size $window
+  exports.documentSize = prop -> size $document
+  exports.windowWidth = prop -> $window.width()
+  exports.windowHeight = prop -> $window.height()
+  exports.documentWidth = prop -> $document.width()
+  exports.documentHeight = prop -> $document.height()
