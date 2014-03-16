@@ -3,8 +3,6 @@
 
 do (exports = (window.baconUtils or= {}).drags = {}) ->
 
-  id = (x) -> x
-
   getPos = (e) ->
     source = (if e.originalEvent.touches
       e.originalEvent.touches[0]
@@ -42,7 +40,7 @@ do (exports = (window.baconUtils or= {}).drags = {}) ->
             when 'horizontal' then preventHorisontal
             when 'vertical' then preventVertical
             when 'both' then preventBoth
-            else id
+            else Bacon._.id
         )
 
   exports.isHorizontal = (move) ->

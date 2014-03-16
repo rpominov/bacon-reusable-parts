@@ -1,14 +1,11 @@
 /*
  * Taken from https://github.com/pozadi/bacon-reusable-parts
  * License: MIT
- * Built at: 2013-12-26 14:10:33 +0400
+ * Built at: 2014-03-16 22:42:44 +0400
  */
 
 (function(exports) {
-  var abstractMoves, deltas, documentMouseMoves, documentMouseUps, documentTouchEnds, documentTouchMoves, getPos, id, preventBoth, preventHorisontal, preventVertical;
-  id = function(x) {
-    return x;
-  };
+  var abstractMoves, deltas, documentMouseMoves, documentMouseUps, documentTouchEnds, documentTouchMoves, getPos, preventBoth, preventHorisontal, preventVertical;
   getPos = function(e) {
     var source;
     source = (e.originalEvent.touches ? e.originalEvent.touches[0] : e.originalEvent);
@@ -55,7 +52,7 @@
           case 'both':
             return preventBoth;
           default:
-            return id;
+            return Bacon._.id;
         }
       })());
     });
