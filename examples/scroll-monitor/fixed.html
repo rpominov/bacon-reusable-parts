@@ -1,0 +1,52 @@
+<!-- Original: https://github.com/sakabako/scrollMonitor/blob/master/demos/fixed.html -->
+<!doctype html>
+<head>
+  <style type="text/css">
+    body {
+      height: 10000px;
+    }
+    span {
+      position: absolute;
+      top: 100px;
+      left: 100px;
+      width: 300px;
+      height: 200px;
+
+      background-color: gray;
+    }
+    span.two {
+      left: 400px;
+      top: 1000px;
+      background-color: red;
+    }
+    span.three {
+      left: 700px;
+      top: 2000px;
+      background-color: blue;
+    }
+    span.fixed {
+      position: fixed;
+      top: 0;
+    }
+  ​</style>
+</head>
+<body>
+<div>
+  <span class="one">One!</span>
+  <span class="two">Two!</span>
+  <span class="three">Three!</span>
+</div>
+
+
+  <script type="text/javascript" src="../../bower_components/jquery/jquery.js"></script>
+  <script type="text/javascript" src="../../bower_components/bacon/dist/Bacon.js"></script>
+  <script type="text/javascript" src="../../dist/bacon-scroll-monitor.js"></script>
+  <script type="text/javascript">
+    $('span').each(function(i, element) {
+      var watcher = baconUtils.scrollMonitor.create(element);
+      watcher.lock()
+      watcher.state.map('.isAboveViewport').assign($(element), 'toggleClass', 'fixed');
+    });
+  </script>
+
+</body>
