@@ -103,6 +103,6 @@ do (exports = (window.baconUtils or= {}).scrollMonitor = {}) ->
 
     api.locationBus.plug toProp recalculateRequests, ->
       top: $el.offset().top - api.offsets.top
-      height: $el.innerHeight() + api.offsets.bottom
+      height: $el.outerHeight() + api.offsets.bottom
 
     return api
