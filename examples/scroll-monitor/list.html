@@ -1,0 +1,117 @@
+<!-- Original: https://github.com/sakabako/scrollMonitor/blob/master/demos/list.html -->
+<!doctype html>
+<head>
+  <style type="text/css">
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: helvetica, arial, sans-serif;
+    }
+    section {
+      padding: 60px 0 20px 0;
+      margin: 0;
+      position: relative;
+    }
+    h2 {
+      height: 29px;
+      padding: 10px;
+      margin: 0;
+      background-color: white;
+      border-top: 1px solid #aaa;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+
+    section.bottom h2 {
+      top: auto;
+      bottom: 0;
+    }
+
+    section.fixed h2 {
+      position: fixed;
+    }
+
+    ul {
+      padding: 0 0 0 2em;
+      margin: 0;
+      line-height: 1.5
+    }
+
+  ​</style>
+</head>
+<body>
+<div id="target"></div>
+<script type="text/javascript" src="../../bower_components/jquery/jquery.js"></script>
+<script type="text/javascript" src="../../bower_components/bacon/dist/Bacon.js"></script>
+<script type="text/javascript" src="../../dist/bacon-scroll-monitor.js"></script>
+<script type="text/javascript">
+//requirejs(['../scrollMonitor'], function( scrollMonitor ) {
+  $.getJSON('./listdata.json', function( data ) {
+
+    // fill the document with HTML
+    var htmlBuffer = [];
+    $.each(data, function( type, beerMap ) {
+      htmlBuffer.push('<section><h2>'+type+'</h2><ul>');
+
+      var breweries = Object.keys(beerMap);
+      breweries.sort();
+      breweries.forEach(function( brewery ) {
+        var beers = beerMap[brewery].sort();
+        htmlBuffer.push('<li>'+brewery+': <i>'+beers.join(', ')+'</i></li>');
+      })
+      htmlBuffer.push('</li></section>');
+    });
+    $('#target').html(htmlBuffer.join(''));
+
+    // anchor the section header
+    var h2Height = $('h2').innerHeight();
+
+
+    $('section').each(function(index, section) {
+
+      // var sectionWatcher = scrollMonitor.beget(section)
+
+      // var sectionMinusBottomHeadline = scrollMonitor.create(section, {bottom: -1*h2Height});
+
+      // sectionMinusBottomHeadline.stateChange( function() {
+
+      //   if (!sectionWatcher.isInViewport) {
+      //     section.className = '';
+      //   } else if (sectionMinusBottomHeadline.isInViewport && sectionMinusBottomHeadline.isAboveViewport) {
+      //     section.className = 'fixed';
+      //   } else if (sectionMinusBottomHeadline.isAboveViewport) {
+      //     section.className = 'bottom';
+      //   } else {
+      //     section.className = '';
+      //   }
+
+      // } )
+
+      var sectionWatcher = baconUtils.scrollMonitor.create(section);
+      var sectionMinusBottomHeadline =
+        baconUtils.scrollMonitor.create(section, {bottom: -1*h2Height, top: 0});
+
+      Bacon.onValues(
+        sectionWatcher.state,
+        sectionMinusBottomHeadline.state,
+        function(sw, smbh) {
+          if (!sw.isInViewport) {
+            section.className = '';
+          } else if (smbh.isInViewport && smbh.isAboveViewport) {
+            section.className = 'fixed';
+          } else if (smbh.isAboveViewport) {
+            section.className = 'bottom';
+          } else {
+            section.className = '';
+          }
+        }
+      );
+
+    })
+
+  });
+//});
+</script>
+</body>
