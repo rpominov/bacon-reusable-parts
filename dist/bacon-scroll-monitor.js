@@ -1,7 +1,7 @@
 /*
  * Taken from https://github.com/pozadi/bacon-reusable-parts
  * License: MIT
- * Built at: 2014-03-17 03:14:43 +0400
+ * Built at: 2014-03-17 15:39:51 +0400
  */
 
 (function(exports) {
@@ -88,7 +88,7 @@
     api.locationBus.plug(toProp(recalculateRequests, function() {
       return {
         top: $el.offset().top - api.offsets.top,
-        height: $el.height() + api.offsets.bottom
+        height: $el.innerHeight() + api.offsets.bottom
       };
     }));
     return api;
