@@ -1,13 +1,13 @@
 /*
  * Taken from https://github.com/pozadi/bacon-reusable-parts
  * License: MIT
- * Built at: 2014-03-17 03:42:35 +0400
+ * Built at: 2014-03-21 20:02:48 +0400
  */
 
 (function(exports) {
   var $document, $window, documentResizes, prop;
   $window = $(window);
-  exports.windowResizes = $window.asEventStream('resize').debounceImmediate(250);
+  exports.windowResizes = $window.asEventStream('resize').throttle(250);
   prop = function(getValue) {
     return exports.windowResizes.map(getValue).toProperty(getValue());
   };

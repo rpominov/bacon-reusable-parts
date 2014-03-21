@@ -1,7 +1,7 @@
 /*
  * Taken from https://github.com/pozadi/bacon-reusable-parts
  * License: MIT
- * Built at: 2014-03-17 23:25:56 +0400
+ * Built at: 2014-03-21 20:04:37 +0400
  */
 
 (function(exports) {
@@ -11,10 +11,10 @@
   };
   $window = $(window);
   $document = $(document);
-  exports.viewportTop = toProp($window.asEventStream('scroll').debounceImmediate(50), function() {
+  exports.viewportTop = toProp($window.asEventStream('scroll'), function() {
     return $window.scrollTop();
   });
-  exports.viewportHeight = toProp($window.asEventStream('resize').debounceImmediate(250), function() {
+  exports.viewportHeight = toProp($window.asEventStream('resize').throttle(250), function() {
     return $window.height();
   });
   exports.documentHeight = toProp(Bacon.interval(250), function() {

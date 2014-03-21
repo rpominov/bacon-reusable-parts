@@ -7,7 +7,7 @@ do (exports = (window.baconUtils or= {})) ->
 
   $window = $(window)
 
-  exports.windowResizes = $window.asEventStream('resize').debounceImmediate(250)
+  exports.windowResizes = $window.asEventStream('resize').throttle(250)
 
   prop = (getValue) ->
     exports.windowResizes.map(getValue).toProperty getValue()

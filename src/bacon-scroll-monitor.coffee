@@ -14,10 +14,10 @@ do (exports = (window.baconUtils or= {}).scrollMonitor = {}) ->
   $document = $(document)
 
 
-  exports.viewportTop = toProp $window.asEventStream('scroll').debounceImmediate(50), ->
+  exports.viewportTop = toProp $window.asEventStream('scroll'), ->
     $window.scrollTop()
 
-  exports.viewportHeight = toProp $window.asEventStream('resize').debounceImmediate(250), ->
+  exports.viewportHeight = toProp $window.asEventStream('resize').throttle(250), ->
     $window.height()
 
   exports.documentHeight = toProp(Bacon.interval(250), -> $document.height())
