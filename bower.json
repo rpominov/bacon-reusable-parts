@@ -13,7 +13,8 @@
     "tests"
   ],
   "dependencies": {
-    "bacon": "*",
-    "jquery": "*"
+    "bacon": "~0.7.11",
+    "kefir": "~0.1.6",
+    "jquery": "~2.1.1"
   }
 }
